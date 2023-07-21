@@ -7,7 +7,7 @@ import {todoItemExtProvider} from "./widgets/TodoListWidget/providers/todoItemEx
 import {todoSimpleFactory} from "./widgets/TodoListWidget/factories/todoSimpleFactory.js";
 import {todoExtFactory} from "./widgets/TodoListWidget/factories/todoExtFactory.js";
 import {todoApiFactory} from "./widgets/TodoListWidget/factories/todoApiFactory.js";
-import {todoItemApiProvider} from "./widgets/TodoListWidget/providers/todoItemApiProvider.jsx";
+import {todoApiItemProvider} from "./widgets/TodoListWidget/providers/todoApiItemProvider.jsx";
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <hr/>
         <TodoListWidget title="Simple" fetchCallback={getData} todoFactory={todoSimpleFactory} customListItemProvider={todoItemSimpleProvider}/>
         <TodoListWidget title="Etendu" fetchCallback={getDataExt} todoFactory={todoExtFactory} customListItemProvider={todoItemExtProvider}/>
-        <TodoListWidget title="API" fetchCallback={getDataFromApi} todoFactory={todoApiFactory} customListItemProvider={todoItemApiProvider}/>
+        <TodoListWidget title="API" fetchCallback={getDataFromApi} todoFactory={todoApiFactory} customListItemProvider={todoApiItemProvider}/>
       </div>
     </div>
   )
