@@ -6,8 +6,7 @@ export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListIt
   const [todos, setTodos] = useState([])
 
   const fetchTodos = async () => {
-    const todoItems = await fetchCallback();
-    setTodos(todoItems);
+    return await fetchCallback();
   };
 
   const handleAddTodo = (newTodo) => {
@@ -27,7 +26,7 @@ export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListIt
   }
 
   useEffect(() => {
-    fetchTodos()
+    fetchTodos().then(data => setTodos(data) );
   }, []);
 
 
