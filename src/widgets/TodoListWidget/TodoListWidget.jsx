@@ -5,8 +5,14 @@ import {TodoListItems} from "./components/TodoListItems.jsx";
 export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListItemProvider }) => {
   const [todos, setTodos] = useState(null)
 
-  const fetchTodos = async () => {
-    return await fetchCallback();
+  const fetchTodos = async (signal) => {
+    try {
+      return await fetchCallback(signal);
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        throw new Error(error);
+      }
+    }
   };
 
   const handleAddTodo = (newTodo) => {
@@ -26,9 +32,18 @@ export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListIt
   }
 
   useEffect(() => {
-    fetchTodos().then(data => {
-      setTodos(data);
-    });
+    const abortController = new AbortController();
+    fetchTodos(abortController.signal)
+      .then(data => {
+        setTodos(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    return () => {
+      abortController.abort();
+    }
   }, []);
 
 
