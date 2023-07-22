@@ -3,7 +3,7 @@ import {TodoListAddForm} from "./components/TodoAddForm.jsx";
 import {TodoListItems} from "./components/TodoListItems.jsx";
 
 export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListItemProvider }) => {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(null)
 
   const fetchTodos = async () => {
     return await fetchCallback();
@@ -26,7 +26,9 @@ export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListIt
   }
 
   useEffect(() => {
-    fetchTodos().then(data => setTodos(data) );
+    fetchTodos().then(data => {
+      setTodos(data);
+    });
   }, []);
 
 
@@ -36,7 +38,8 @@ export const TodoListWidget = ({ title, fetchCallback, todoFactory, customListIt
       <hr/>
       <TodoListAddForm addTodoHandler={handleAddTodo} todoFactory={todoFactory}/>
       <hr/>
-      <TodoListItems todos={todos} deleteTodoHandler={handleDeleteTodo} toggleTodoCompletedHandler={handleToggleCompleted} customListItemProvider={customListItemProvider}/>
+      { todos === null && <h2 className={'text-center mt-4 text-2xl'}>🌀 Chargement...</h2> }
+      { todos && <TodoListItems todos={todos} deleteTodoHandler={handleDeleteTodo} toggleTodoCompletedHandler={handleToggleCompleted} customListItemProvider={customListItemProvider}/> }
     </div>
   )
 }
